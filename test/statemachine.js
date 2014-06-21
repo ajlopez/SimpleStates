@@ -1,0 +1,1 @@
+var ss = require('..');exports['create state machine as object'] = function (test) {    var sm = ss.stateMachine();        test.ok(sm);    test.equal(typeof sm, 'object');};
