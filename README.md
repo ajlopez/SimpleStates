@@ -35,7 +35,8 @@ TBD
 
 ## References
 
-TBD
+- [Stateless](https://code.google.com/p/stateless/) A C# Hierarchical State Machine
+- [Simple State Machine](http://simplestatemachine.codeplex.com/) 
 
 ## License
 
