@@ -18,7 +18,73 @@ Reference in your program:
 var ss = require('simplestates');
 ```
 
-TBD
+Create state machine with initial state
+```js
+var sm = ss.stateMachine('OffHook');
+```
+
+Define states with trigger actions
+```js
+sm.state('OffHook')
+    .when('CallDialed', 'Ringing');
+    
+sm.state('Ringing')
+    .when('HungUp', 'OffHook')
+    .when('CallConnected', 'Connected');
+```
+
+Define states with enter and exit functions
+```js
+var exits = 0;
+var ringings = 0;
+
+sm.state('OffHook')
+    .when('CallDialed', 'Ringing')
+    .exit(function () { exits++; });
+    
+sm.state('Ringing')
+    .enter(function () { ringings++; })
+    .when('HungUp', 'OffHook')
+    .when('CallConnected', 'Connected');
+```
+
+Define triggers with functions
+```js
+var ringings = 0;
+
+sm.state('OffHook')
+    .when('CallDialed', 
+        function () { ringings++; }, 
+        'Ringing');
+```
+
+If a triggered function returns `false` the actions are stopped, and the next defined
+actions for the same trigger are executed
+```js
+var calls = 0;
+
+// ....
+    
+sm.state('Ringing')
+    .when('HungUp', 'OffHook')
+    .when('CallConnected', 
+        function ()  { if (calls < 100) return false; },
+        'Stop');
+    .when('CallConnected', 
+        function ()  { call++; }, 
+        'Connected');
+```
+
+Usage in browser
+```html
+<script src='simplestates.js' type='text/javascript'></script>
+```
+Then the `simplestates` object is defined:
+```js
+var machine = simplestates.stateMachine('OffHook');
+```
+
+
 
 ## Development
 
