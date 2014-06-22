@@ -83,7 +83,7 @@ Then the `simplestates` object is defined:
 ```js
 var machine = simplestates.stateMachine('OffHook');
 ```
-
+You can directly use the file `lib/simplestates.js`. It is already prepared for browser consumption.
 
 
 ## Development
