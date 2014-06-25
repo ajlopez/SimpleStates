@@ -6,8 +6,17 @@ exports['fire a trigger'] = function (test) {
     sm.state('OffHook').when('CallDialed', 'Ringing');
     
     test.equal(sm.getState(), 'OffHook');
-    sm.fire('CallDialed');
+    test.equal(sm.fire('CallDialed'), true);
     test.equal(sm.getState(), 'Ringing');
+};
+
+exports['fire a trigger without associated actions'] = function (test) {
+    var sm = ss.stateMachine('OffHook');
+    sm.state('OffHook').when('CallDialed', 'Ringing');
+    
+    test.equal(sm.getState(), 'OffHook');
+    test.equal(sm.fire('Cancel'), false);
+    test.equal(sm.getState(), 'OffHook');
 };
 
 exports['one exit function'] = function (test) {
