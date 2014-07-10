@@ -10,6 +10,16 @@ exports['fire a trigger'] = function (test) {
     test.equal(sm.getState(), 'Ringing');
 };
 
+exports['fire a global trigger'] = function (test) {
+    var sm = ss.stateMachine('OffHook');
+    sm.state('OffHook').when('CallDialed', 'Ringing');
+    sm.when('Cancel', 'Canceled');
+    
+    test.equal(sm.getState(), 'OffHook');
+    test.equal(sm.fire('Cancel'), true);
+    test.equal(sm.getState(), 'Canceled');
+};
+
 exports['fire a trigger without associated actions'] = function (test) {
     var sm = ss.stateMachine('OffHook');
     sm.state('OffHook').when('CallDialed', 'Ringing');
